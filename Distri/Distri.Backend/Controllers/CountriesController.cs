@@ -19,6 +19,7 @@ namespace Distri.Backend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
+            //CUANDO SON CONSULTAS COMPLEJAS CON MUCHOS INNER SE PUEDE AGREGAR ASNOTRACKING() ANTES DEL TOLIST PARA QUE NO GUARDE LOS LOGS EF
             return Ok(await _context.Countries.ToListAsync());
         }
 
