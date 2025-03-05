@@ -7,7 +7,6 @@
 <div class="mb-3">
     <a class="btn btn-primary" href="/countries/create">Nuevo País</a>
 </div>
-s
 <GenericList MyList="Countries">
     <Body>
         <table class="table table-striped">
@@ -25,8 +24,9 @@ s
                             @country.Name
                         </td>
                         <td>
-                            <a class="btn btn-warning">Editar</a>
-                            <button class="btn btn-danger">Borrar</button>
+                            <a href="/countries/edit/@country.Id" class="btn btn-warning">Editar</a>
+                            <button class="btn btn-danger" @onclick=@(() => DeleteAsync(country))>Borrar</button>
+
                         </td>
                     </tr>
                 }
