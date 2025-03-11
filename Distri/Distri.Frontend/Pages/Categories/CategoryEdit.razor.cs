@@ -1,6 +1,7 @@
 ﻿using CurrieTechnologies.Razor.SweetAlert2;
 using Distri.Frontend.Pages.Countries;
 using Distri.Frontend.Repositories;
+using Distri.Frontend.Shared;
 using Distri.Shared.Entities;
 using Microsoft.AspNetCore.Components;
 
@@ -9,7 +10,7 @@ namespace Distri.Frontend.Pages.Categories
     public partial class CategoryEdit
     {
         private Category? category;
-        private CategoryForm? categoryForm;
+        private FormWithName<Category>? categoryForm;
 
         [Inject] private NavigationManager navigationManager { get; set; } = null!;
         [Inject] private IRepository repository { get; set; } = null!;

@@ -1,6 +1,7 @@
 ﻿using CurrieTechnologies.Razor.SweetAlert2;
 using Distri.Frontend.Pages.Countries;
 using Distri.Frontend.Repositories;
+using Distri.Frontend.Shared;
 using Distri.Shared.Entities;
 using Microsoft.AspNetCore.Components;
 
@@ -10,7 +11,8 @@ namespace Distri.Frontend.Pages.Categories
     {
 
         private Category category = new();
-        private CategoryForm? categoryForm;
+        private FormWithName<Category>? categoryForm;
+
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;

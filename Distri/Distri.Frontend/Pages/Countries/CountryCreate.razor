@@ -1,5 +1,6 @@
 ﻿@page "/countries/create"
 
 <h3>Crear País</h3>
+<FormWithName @ref="countryForm" Label="Pais" Model="country" OnValidSubmit="CreateAsync" ReturnAction="Return" />
 
-<CountryForm @ref="countryForm" Country="country" OnValidSubmit="CreateAsync" ReturnAction="Return"/>
+  

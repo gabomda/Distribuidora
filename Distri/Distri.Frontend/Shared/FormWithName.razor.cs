@@ -1,15 +1,17 @@
 ﻿using CurrieTechnologies.Razor.SweetAlert2;
 using Distri.Shared.Entities;
+using Distri.Shared.Interfaces;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components;
 
-namespace Distri.Frontend.Pages.Categories
+namespace Distri.Frontend.Shared
 {
-    public partial class CategoryForm
+    public partial class FormWithName<TModel> where TModel : IEntityWithName
     {
         private EditContext editContext = null!;
-        [EditorRequired, Parameter] public Category Category { get; set; } = null!;
+        [EditorRequired, Parameter] public TModel Model { get; set; } = default!;
+        [EditorRequired, Parameter] public string Label { get; set; } = null!;
         [EditorRequired, Parameter] public EventCallback OnValidSubmit { get; set; }
         [EditorRequired, Parameter] public EventCallback ReturnAction { get; set; }
         [Inject] public SweetAlertService SweetAlertService { get; set; } = null!;
@@ -17,7 +19,7 @@ namespace Distri.Frontend.Pages.Categories
 
         protected override void OnInitialized()
         {
-            editContext = new(Category);
+            editContext = new(Model);
         }
 
         private async Task OnBeforeInternalNavigation(LocationChangingContext context)
