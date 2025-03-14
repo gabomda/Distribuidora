@@ -1,5 +1,7 @@
 ﻿using Distri.Backend.Data;
+using Distri.Backend.Helpers;
 using Distri.Backend.Repositories.Interfaces;
+using Distri.Shared.DTOs;
 using Distri.Shared.Entities;
 using Distri.Shared.Responses;
 using Microsoft.EntityFrameworkCore;
@@ -37,12 +39,48 @@ namespace Distri.Backend.Repositories.Implementations
         
         public override async Task<ActionResponse<IEnumerable<State>>> GetAsync()
         {
-            var states = await _context.States.Include(s=>s.Cities).ToListAsync();
+            var states = await _context.States
+                .OrderBy(s=>s.Name)
+                .Include(s=>s.Cities)
+                .ToListAsync();
             return new ActionResponse<IEnumerable<State>>()
             {
                 WasSuccess = true,
                 Result = states
             };
         }
+
+        public override async Task<ActionResponse<IEnumerable<State>>> GetAsync(PaginationDTO pagination)
+        {
+            var queryable = _context.States
+                .Include(x => x.Cities)
+                .Where(x => x.Country!.Id == pagination.Id)
+                .AsQueryable();
+
+            return new ActionResponse<IEnumerable<State>>
+            {
+                WasSuccess = true,
+                Result = await queryable
+                    .OrderBy(x => x.Name)
+                    .Paginate(pagination)
+                    .ToListAsync()
+            };
+        }
+
+        public async override Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination)
+        {
+            var queryable = _context.States
+                .Where(x => x.Country!.Id == pagination.Id)
+                .AsQueryable();
+
+            double count = await queryable.CountAsync();
+            int totalPages = (int)Math.Ceiling(count / pagination.RecordNumber);
+            return new ActionResponse<int>
+            {
+                WasSuccess = true,
+                Result = totalPages
+            };
+        }
+
     }
 }

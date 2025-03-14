@@ -1,6 +1,7 @@
 ﻿using Distri.Backend.Repositories.Implementations;
 using Distri.Backend.Repositories.Interfaces;
 using Distri.Backend.UnitsOfWork.Interfaces;
+using Distri.Shared.DTOs;
 using Distri.Shared.Entities;
 using Distri.Shared.Responses;
 
@@ -14,6 +15,7 @@ namespace Distri.Backend.UnitsOfWork.Implementations
         {
             _countriesRepository = countriesRepository;
         }
+        public override async Task<ActionResponse<IEnumerable<Country>>> GetAsync(PaginationDTO pagination) => await _countriesRepository.GetAsync(pagination);
 
         public override async Task<ActionResponse<IEnumerable<Country>>> GetAsync() => await _countriesRepository.GetAsync();
 

@@ -1,4 +1,5 @@
-﻿using Distri.Shared.Responses;
+﻿using Distri.Shared.DTOs;
+using Distri.Shared.Responses;
 
 namespace Distri.Backend.Repositories.Interfaces
 {
@@ -7,6 +8,10 @@ namespace Distri.Backend.Repositories.Interfaces
         Task<ActionResponse<T>> GetAsync(int id);
 
         Task<ActionResponse<IEnumerable<T>>> GetAsync();
+        Task<ActionResponse<IEnumerable<T>>> GetAsync(PaginationDTO pagination);
+
+        Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination);
+
 
         Task<ActionResponse<T>> AddAsync(T entity);
 

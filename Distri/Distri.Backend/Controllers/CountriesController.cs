@@ -1,5 +1,6 @@
 ﻿using Distri.Backend.Data;
 using Distri.Backend.UnitsOfWork.Interfaces;
+using Distri.Shared.DTOs;
 using Distri.Shared.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,7 @@ namespace Distri.Backend.Controllers
             _countriesUnitOfWork = countriesUnitOfWork;
         }
 
-        [HttpGet]
+        [HttpGet("full")]
         public override async Task<IActionResult> GetAsync()
         {
             var response = await _countriesUnitOfWork.GetAsync();
@@ -29,9 +30,21 @@ namespace Distri.Backend.Controllers
             return BadRequest();
         }
 
+        [HttpGet]
+        public override async Task<IActionResult> GetAsync(PaginationDTO pagination)
+        {
+            var response = await _countriesUnitOfWork.GetAsync(pagination);
+            if (response.WasSuccess)
+            {
+                return Ok(response.Result);
+            }
+            return BadRequest();
+        }
+
+
         [HttpGet("{id}")]
         public override async Task<IActionResult> GetAsync(int id)
-        {
+        { 
             var response = await _countriesUnitOfWork.GetAsync(id);
             if (response.WasSuccess)
             {
