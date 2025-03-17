@@ -7,9 +7,11 @@ namespace Distri.Frontend.Pages.Countries
 {
     public partial class CountriesIndex
     {
+        private int currentPage = 1;
+        private int totalPages;
         [Inject] private IRepository Repository { get; set; }=null!;
         [Inject] private NavigationManager navigationManager { get; set; } = null!;
-        [Inject] private SweetAlertService sweetAlertService { get; set; } = null!;
+        [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
 
         public List<Country>? Countries { get; set; }
 
@@ -18,21 +20,51 @@ namespace Distri.Frontend.Pages.Countries
             await LoadAsync();
         }
 
-        private async Task LoadAsync()
+        private async Task SelectedPageAsync(int page)
+        { 
+            currentPage = page;
+            await LoadAsync(page);
+        }
+
+        private async Task LoadAsync(int page = 1)
         {
-            var responseHppt = await Repository.GetAsync<List<Country>>("api/countries");
-            if (responseHppt.Error)
+            var ok = await LoadListAsync(page);
+            if (ok)
             {
-                var message = await responseHppt.GetErrorMessageAsync();
-                await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+                await LoadPagesAsync();
+            }
+        }
+
+        private async Task<bool> LoadListAsync(int page)
+        {
+            var responseHttp = await Repository.GetAsync<List<Country>>($"api/countries?page={page}");
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+                return false;
+            }
+            Countries = responseHttp.Response;
+            return true;
+        }
+
+
+        private async Task LoadPagesAsync()
+        {
+            var responseHttp = await Repository.GetAsync<int>("api/countries/totalPages");
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
                 return;
             }
-            Countries = responseHppt.Response!;
+            totalPages = responseHttp.Response;
         }
+
 
         private async Task DeleteAsync(Country country)
         {
-            var result = await sweetAlertService.FireAsync(new SweetAlertOptions
+            var result = await SweetAlertService.FireAsync(new SweetAlertOptions
             {
                 Title = "Confirmación",
                 Text = $"¿Esta seguro que quieres borrar el país: {country.Name}?",
@@ -57,13 +89,13 @@ namespace Distri.Frontend.Pages.Countries
                 else
                 {
                     var mensajeError = await responseHttp.GetErrorMessageAsync();
-                    await sweetAlertService.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+                    await SweetAlertService.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
                 }
                 return;
             }
 
             await LoadAsync();
-            var toast = sweetAlertService.Mixin(new SweetAlertOptions
+            var toast = SweetAlertService.Mixin(new SweetAlertOptions
             {
                 Toast = true,
                 Position = SweetAlertPosition.BottomEnd,

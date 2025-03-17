@@ -1,4 +1,4 @@
-﻿@page "/categories"
+﻿ @page "/categories"
 
 @inject IRepository repository
 
@@ -9,10 +9,13 @@
 </div>
 <GenericList MyList="Categories">
     <Body>
+        <Pagination CurrentPage="currentPage"
+                    TotalPages="totalPages"
+                    SelectedPage="SelectedPageAsync" />
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>País</th>
+                    <th>País</th> 
                     <th></th>
                 </tr>
             </thead>
