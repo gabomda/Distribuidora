@@ -19,6 +19,18 @@ namespace Distri.Backend.Controllers
             _countriesUnitOfWork = countriesUnitOfWork;
         }
 
+        [HttpGet("totalPages")]
+        public override async Task<IActionResult> GetPagesAsync([FromQuery] PaginationDTO pagination)
+        {
+            var action = await _countriesUnitOfWork.GetTotalPagesAsync(pagination);
+            if (action.WasSuccess)
+            {
+                return Ok(action.Result);
+            }
+            return BadRequest();
+        }
+
+
         [HttpGet("full")]
         public override async Task<IActionResult> GetAsync()
         {
