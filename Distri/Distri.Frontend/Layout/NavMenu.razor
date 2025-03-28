@@ -11,9 +11,12 @@
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Inicio
             </NavLink>
         </div>
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="categories">
                 <span class="bi bi-list-check-fill-nav-menu" aria-hidden="true"></span> Categorias
@@ -24,6 +27,10 @@
                 <span class="bi bi-globe-americas-fill-nav-menu" aria-hidden="true"></span> Paises
             </NavLink>
         </div>
+
+            </Authorized>
+        </AuthorizeView>
+
     </nav>
 </div>
 

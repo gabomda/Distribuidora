@@ -2,9 +2,11 @@
 using Distri.Shared.Entities;
 using Microsoft.AspNetCore.Components;
 using CurrieTechnologies.Razor.SweetAlert2;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Distri.Frontend.Pages.Countries
 {
+    [Authorize(Roles ="Admin")]
     public partial class CountriesIndex
     {
         private int currentPage = 1;

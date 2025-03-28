@@ -3,10 +3,12 @@ using Distri.Frontend.Pages.Countries;
 using Distri.Frontend.Repositories;
 using Distri.Frontend.Shared;
 using Distri.Shared.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 
 namespace Distri.Frontend.Pages.Categories
 {
+    [Authorize(Roles = "Admin")]
     public partial class CategoryEdit
     {
         private Category? category;

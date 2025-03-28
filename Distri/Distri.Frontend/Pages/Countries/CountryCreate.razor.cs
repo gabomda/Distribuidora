@@ -2,10 +2,12 @@
 using Distri.Frontend.Repositories;
 using Distri.Frontend.Shared;
 using Distri.Shared.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 
 namespace Distri.Frontend.Pages.Countries
 {
+    [Authorize(Roles = "Admin")]
     public partial class CountryCreate
     {
         private Country country = new();

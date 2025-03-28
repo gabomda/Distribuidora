@@ -1,6 +1,7 @@
 ﻿using Distri.Backend.UnitsOfWork.Interfaces;
 using Distri.Shared.DTOs;
 using Distri.Shared.Entities;
+using Distri.Shared.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Distri.Backend.Controllers

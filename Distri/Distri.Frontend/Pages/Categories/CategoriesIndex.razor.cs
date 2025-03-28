@@ -1,10 +1,12 @@
 ﻿using CurrieTechnologies.Razor.SweetAlert2;
 using Distri.Frontend.Repositories;
 using Distri.Shared.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 
 namespace Distri.Frontend.Pages.Categories
 {
+    [Authorize(Roles = "Admin")]
     public partial class CategoriesIndex
     {
         private int currentPage =1;

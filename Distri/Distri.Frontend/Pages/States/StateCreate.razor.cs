@@ -2,11 +2,13 @@
 using Distri.Frontend.Repositories;
 using Distri.Frontend.Shared;
 using Distri.Shared.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System.Security.Principal;
 
 namespace Distri.Frontend.Pages.States
 {
+    [Authorize(Roles = "Admin")]
     public partial class StateCreate
     {
         private State state = new();

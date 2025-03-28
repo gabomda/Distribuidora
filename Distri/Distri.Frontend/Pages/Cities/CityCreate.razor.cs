@@ -2,10 +2,12 @@
 using Distri.Frontend.Repositories;
 using Distri.Frontend.Shared;
 using Distri.Shared.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 
 namespace Distri.Frontend.Pages.Cities
 {
+    [Authorize(Roles = "Admin")]
     public partial class CityCreate
     {
         private City city = new();
