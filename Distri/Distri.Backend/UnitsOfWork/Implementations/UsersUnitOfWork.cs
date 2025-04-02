@@ -1,5 +1,6 @@
 ﻿using Distri.Backend.Repositories.Interfaces;
 using Distri.Backend.UnitsOfWork.Interfaces;
+using Distri.Shared.DTOs;
 using Distri.Shared.Entities;
 using Microsoft.AspNetCore.Identity;
 
@@ -17,7 +18,6 @@ namespace Distri.Backend.UnitsOfWork.Implementations
         {
             return await _usersRepository.AddUserAsync(user, password);
         }
-
         public async Task AddUserToRoleAsync(User user, string roleName)
         {
             await _usersRepository.AddUserToRoleAsync(user, roleName);   
@@ -37,5 +37,10 @@ namespace Distri.Backend.UnitsOfWork.Implementations
         {
             return await _usersRepository.IsUserInRoleAsync(user,roleName);
         }
+        public async Task<SignInResult> LoginAsync(LoginDTO model) => await _usersRepository.LoginAsync(model);
+
+        public async Task LogoutAsync() => await _usersRepository.LogoutAsync();
+
     }
 }
+ 

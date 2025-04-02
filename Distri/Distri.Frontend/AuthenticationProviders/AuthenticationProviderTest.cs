@@ -18,7 +18,7 @@ namespace Distri.Frontend.AuthenticationProviders
                 new Claim(ClaimTypes.Role, "Admin")
             },
             authenticationType: "test");
-            return await Task.FromResult(new AuthenticationState(new ClaimsPrincipal(user)));
+            return await Task.FromResult(new AuthenticationState(new ClaimsPrincipal(admin)));
         }
     }
 }

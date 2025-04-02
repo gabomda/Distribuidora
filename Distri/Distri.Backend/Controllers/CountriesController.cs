@@ -2,12 +2,15 @@
 using Distri.Backend.UnitsOfWork.Interfaces;
 using Distri.Shared.DTOs;
 using Distri.Shared.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Distri.Backend.Controllers
 {
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     public class CountriesController : GenericController<Country>
     {

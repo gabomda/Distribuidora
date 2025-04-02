@@ -1,5 +1,6 @@
 ﻿using Distri.Backend.Data;
 using Distri.Backend.Repositories.Interfaces;
+using Distri.Shared.DTOs;
 using Distri.Shared.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +12,26 @@ namespace Distri.Backend.Repositories.Implementations
         private readonly DataContext _context;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public UsersRepository(DataContext context,UserManager<User> userManager,RoleManager<IdentityRole> roleManager)
+        public UsersRepository(DataContext context,UserManager<User> userManager,RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
+            _signInManager = signInManager;
         }
+
+        public async Task<SignInResult> LoginAsync(LoginDTO model)
+        {
+            return await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+        }
+
+        public async Task LogoutAsync()
+        {
+            await _signInManager.SignOutAsync();
+        }
+
         public async Task<IdentityResult> AddUserAsync(User user, string password)
         {
             return await _userManager.CreateAsync(user, password);
