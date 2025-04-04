@@ -68,6 +68,14 @@ namespace Distri.Backend.Controllers
             return NotFound(response.Message);
         }
 
+
+        [AllowAnonymous]
+        [HttpGet("combo")]
+        public async Task<IActionResult> GetComboAsync()
+        {
+            return Ok(await _countriesUnitOfWork.GetComboAsync());
+        }
+
     }
 
 }

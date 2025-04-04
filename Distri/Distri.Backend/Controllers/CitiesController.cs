@@ -40,5 +40,12 @@ namespace Distri.Backend.Controllers
             }
             return BadRequest();
         }
+        [AllowAnonymous]
+        [HttpGet("combo/{stateId:int}")]
+        public async Task<IActionResult> GetComboAsync(int stateId)
+        {
+            return Ok(await _citiesUnitOfWork.GetComboAsync(stateId));
+        }
+
     }
 }

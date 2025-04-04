@@ -22,5 +22,7 @@ namespace Distri.Backend.UnitsOfWork.Implementations
 
         public override async Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination) => await _statesRepository.GetTotalPagesAsync(pagination);
 
+        public async Task<IEnumerable<State>> GetComboAsync(int countryId) => await _statesRepository.GetComboAsync(countryId);
+
     }
 }

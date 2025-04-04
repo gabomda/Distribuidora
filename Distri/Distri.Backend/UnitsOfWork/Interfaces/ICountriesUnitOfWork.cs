@@ -8,6 +8,7 @@ namespace Distri.Backend.UnitsOfWork.Interfaces
     {
         Task<ActionResponse<Country>> GetAsync(int id);
         Task<ActionResponse<IEnumerable<Country>>> GetAsync();
+        Task<IEnumerable<Country>> GetComboAsync();
         Task<ActionResponse<IEnumerable<Country>>> GetAsync(PaginationDTO pagination);
         Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination);
     }
